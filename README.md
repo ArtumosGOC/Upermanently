@@ -1,6 +1,6 @@
 ## Sobre
 
-O projeto "Uninstall Driver Permanently" fornece um script para desinstalar drivers permanentemente do seu sistema Windows. Ele é especialmente útil para remover drivers problemáticos que continuam sendo reinstalados automaticamente pelo sistema operacional. O script permite listar os dispositivos presentes no sistema, selecionar um dispositivo específico e desinstalá-lo, além de adicionar um comando de desinstalação ao Registro para execução na inicialização.
+O projeto "Uninstall Driver Permanently" fornece um script para "desinstalar"(desativa, não era a ideia inicial) drivers permanentemente do seu sistema Windows. Ele é especialmente útil para remover drivers problemáticos que continuam sendo reinstalados automaticamente pelo sistema operacional. O script permite listar os dispositivos presentes no sistema, selecionar um dispositivo específico e desinstalá-lo, além de adicionar um comando de desinstalação ao Registro para execução na inicialização.
 
 
 ## Pré-requisitos
