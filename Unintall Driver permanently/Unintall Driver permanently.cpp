@@ -2,13 +2,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <locale.h>
+#include <clocale>
 #include <stdexcept>
 #include <sstream>
-#include <algorithm>
 #include <conio.h>
-#include <thread> 
-#include <chrono>
+#include <algorithm>
+
 
 #pragma comment(lib, "setupapi.lib")
 
@@ -61,7 +60,12 @@ std::wstring ReplaceEscapeSequences(const std::wstring& str) {
 
     return result;
 }
-
+std::wstring TextUpper(const std::wstring& text)
+{
+	std::wstring result = text;
+	std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+	return result;
+}
 // Função para executar um comando PowerShell e capturar a saída
 std::wstring ExecutePowerShellCommand(const std::wstring& command) {
     std::wstring result;
@@ -80,6 +84,7 @@ std::wstring ExecutePowerShellCommand(const std::wstring& command) {
 
 // Função para listar dispositivos BTHENUM
 std::vector<DeviceInfo> ListDevices() {
+	
     std::vector<DeviceInfo> devices;
     std::wstring command = L"powershell.exe -Command \"Get-PnpDevice | Select-Object InstanceId, FriendlyName, Status | ConvertTo-Json\"";
     std::wstring output = ExecutePowerShellCommand(command);
@@ -88,8 +93,8 @@ std::vector<DeviceInfo> ListDevices() {
     std::wistringstream jsonStream(output);
     std::wstring line;
 
-
-	std::wcout << L"Qual opção deseja realizar?\n1 - Desinstalar um driver\n2 - Listar drivers desinstalados\n";
+    
+	std::wcout << L"Qual opcao deseja realizar?\n1 - Desinstalar um driver\n2 - Listar drivers desinstalados\n";
 
 	int option;
 
@@ -113,10 +118,10 @@ std::vector<DeviceInfo> ListDevices() {
     {
         // Solicitar palavra-chave do usuário para filtrar dispositivos
         std::wstring keyword;
-        std::wcout << L"Digite a palavra-chave para filtrar dispositivos (deixe vazio para listar tudo): ";
+        std::wcout << L"Digite a palavra-chave para filtrar dispositivos (deixe vazio para listar ): ";
         std::getline(std::wcin, keyword);
         keyword.erase(std::remove(keyword.begin(), keyword.end(), L' '), keyword.end()); // Remover espaços em branco
-
+		keyword = TextUpper(keyword);
         while (std::getline(jsonStream, line)) {
             if (line.find(L"InstanceId") != std::wstring::npos) {
                 // Extrair o InstanceId
@@ -173,7 +178,7 @@ std::vector<DeviceInfo> ListDevices() {
 	}
 	else
 	{
-		std::wcout << L"Opção inválida." << std::endl;
+		std::wcout << L"Opção invalida." << std::endl;
 	}
 
 
@@ -194,7 +199,7 @@ void AddStartupUninstall(const std::wstring& deviceId) {
         // Registra o comando para ser executado na inicialização
         RegSetValueEx(hKey, deviceId.c_str(), 0, REG_SZ, (const BYTE*)command.c_str(), (command.size() + 1) * sizeof(wchar_t));
         RegCloseKey(hKey);
-        std::wcout << L"Comando adicionado ao registro para desinstalar o dispositivo na inicialização." << std::endl;
+        std::wcout << L"Comando adicionado ao registro para desinstalar o dispositivo na inicializacao." << std::endl;
     } else {
         std::wcerr << L"Erro ao acessar o Registro: " << GetLastError() << std::endl;
     }
@@ -217,13 +222,14 @@ void UninstallDevice(const std::wstring& deviceId) {
 }
 
 int main() {
+
     // Lista dispositivos BTHENUM
     std::vector<DeviceInfo> devices = ListDevices();
     bool option = 0x01;
     
     // Verifica se não há dispositivos encontrados
     if (devices.empty()) {
-        std::wcout << L"Nenhum dispositivo BTHENUM encontrado." << std::endl;
+        std::wcout << L"Nenhum dispositivo encontrado." << std::endl;
         return 0;
     }
 
@@ -249,7 +255,7 @@ int main() {
                 };
 
             if (!intToBool(choice)) {
-                std::wcout << L"Escolha inválida." << std::endl;
+                std::wcout << L"Escolha invalida." << std::endl;
                 break;
             }
 
@@ -259,9 +265,6 @@ int main() {
                 AddStartupUninstall(selectedDeviceId); // Adiciona ao registro
                 UninstallDevice(selectedDeviceId); // Desinstala o dispositivo
                 
-            }
-            else {
-               std::wcout << L"Escolha inválida." << std::endl;
             }
             
             std::wcout << L"\nDeseja desinstalar outro drive? (s/n): ";
