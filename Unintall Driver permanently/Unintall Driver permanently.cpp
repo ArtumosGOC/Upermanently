@@ -113,7 +113,7 @@ std::vector<DeviceInfo> ListDevices() {
     {
         // Solicitar palavra-chave do usuário para filtrar dispositivos
         std::wstring keyword;
-        std::wcout << L"Digite a palavra-chave para filtrar dispositivos (deixe vazio para listar BTHE): ";
+        std::wcout << L"Digite a palavra-chave para filtrar dispositivos (deixe vazio para listar tudo): ";
         std::getline(std::wcin, keyword);
         keyword.erase(std::remove(keyword.begin(), keyword.end(), L' '), keyword.end()); // Remover espaços em branco
 
@@ -137,8 +137,7 @@ std::vector<DeviceInfo> ListDevices() {
                 status.erase(remove(status.begin(), status.end(), L','), status.end());
 
                 // Filtrar dispositivos BTHENUM e aplicar a palavra-chave
-                if (instanceId.find(L"BTHENUM") != std::wstring::npos && status.find(L"OK") != std::wstring::npos&&
-                    (keyword.empty() || instanceId.find(keyword) != std::wstring::npos || friendlyName.find(keyword) != std::wstring::npos)) {
+                if (status.find(L"OK") != std::wstring::npos && (keyword.empty() || instanceId.find(keyword) != std::wstring::npos || friendlyName.find(keyword) != std::wstring::npos)) {
                     devices.push_back({ instanceId, friendlyName, status }); // Adiciona o dispositivo à lista
                 }
             }
