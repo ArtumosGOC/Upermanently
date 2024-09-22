@@ -71,3 +71,9 @@ bld/
 *.VC.VC.opendb
 *.db
 *vsidx
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.db-shm
+*.db-wal
