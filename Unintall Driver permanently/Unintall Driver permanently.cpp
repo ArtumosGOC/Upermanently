@@ -118,10 +118,18 @@ std::vector<DeviceInfo> ListDevices() {
     {
         // Solicitar palavra-chave do usuário para filtrar dispositivos
         std::wstring keyword;
+		std::wstring isFriendlyName;
+
+		std::wcout << L"Nome do dispositivo ou nome do Servico do dispositivo:( D - Dispositivo, S - Servico): ";
+        std::getline(std::wcin, isFriendlyName);
+		isFriendlyName = TextUpper(isFriendlyName);
+
         std::wcout << L"Digite a palavra-chave para filtrar dispositivos (deixe vazio para listar ): ";
         std::getline(std::wcin, keyword);
         keyword.erase(std::remove(keyword.begin(), keyword.end(), L' '), keyword.end()); // Remover espaços em branco
-		keyword = TextUpper(keyword);
+        if (isFriendlyName == L"S")
+		    keyword = TextUpper(keyword);
+
         while (std::getline(jsonStream, line)) {
             if (line.find(L"InstanceId") != std::wstring::npos) {
                 // Extrair o InstanceId
@@ -238,8 +246,31 @@ int main() {
     for (size_t i = 0; i < devices.size(); ++i) {
         std::wcout << i + 1 << L": " << devices[i].deviceName << devices[i].status << L"\n(ID:" << devices[i].deviceId << L")\n" << std::endl;
         if (devices[i].status.find(L"Error") != std::wstring::npos)
-            option = 0x00;
+        {
+			std::wcout << L"Deseja  restaurar o driver? (s/n): ";
+			char choiceRestore;
+			std::cin >> choiceRestore;
+			if (choiceRestore == 's' || choiceRestore == 'S')
+			{
+				std::wstring deviceId_ = splitByDoubleBackslash(devices[i].deviceId);
+				std::wstring command = L"powershell.exe -Command \"Enable-PnpDevice -InstanceId '" + ReplaceEscapeSequences(deviceId_) + L"' -Confirm:$false\"";
+				std::wstring output = ExecutePowerShellCommand(command);
+				std::wcout << L"Driver restaurado!\n" << output << std::endl;
+				std::wcout << L"Removendo do registro...\n";
 
+				HKEY hKey;
+				if (RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_WRITE, &hKey) == ERROR_SUCCESS) {
+					RegDeleteValue(hKey, devices[i].deviceId.c_str());
+					RegCloseKey(hKey);
+					std::wcout << L"Entrada removida do registro." << std::endl;
+				}
+				else {
+					std::wcerr << L"Erro ao acessar o Registro: " << GetLastError() << std::endl;
+				}
+
+			}
+            option = 0x00;
+        }
     }
 
     if (option)
