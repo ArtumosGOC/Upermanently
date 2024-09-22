@@ -32,10 +32,6 @@ Para desinstalar um driver, siga os passos abaixo:
 
 ## Funções Principais
 
-### Listar Controladores de Som, Vídeo e Jogos
-
-A função `ListAudioVideoGameControllers` lista todos os dispositivos de som, vídeo e jogos presentes no sistema.
-
 ### Desinstalar Dispositivo
 
 A função `UninstallDevice` desinstala um dispositivo dado seu ID.
