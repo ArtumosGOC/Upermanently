@@ -120,9 +120,23 @@ std::vector<DeviceInfo> ListDevices() {
         std::wstring keyword;
 		std::wstring isFriendlyName;
 
-		std::wcout << L"Nome do dispositivo ou nome do Servico do dispositivo:( D - Dispositivo, S - Servico): ";
-        std::getline(std::wcin, isFriendlyName);
-		isFriendlyName = TextUpper(isFriendlyName);
+		std::wcout << L"Nome do dispositivo ou nome do Servico do dispositivo:( D - Dispositivo, S - Servico)\n";
+        while (true) {
+            if (_kbhit()) { // Verifica se uma tecla foi pressionada
+                char ch = _getch(); // Captura a tecla pressionada
+
+                if (ch == 's' || ch == 'S') {
+					isFriendlyName = L"S";
+                    break; // Sai do loop
+                }
+                else if (ch == 'd' || ch == 'D') {
+					isFriendlyName = L"D";
+                    break; // Sai do loop
+                }
+            }
+        }
+
+		system("cls"); // Limpa a tela
 
         std::wcout << L"Digite a palavra-chave para filtrar dispositivos (deixe vazio para listar ): ";
         std::getline(std::wcin, keyword);
@@ -267,7 +281,6 @@ int main() {
 				else {
 					std::wcerr << L"Erro ao acessar o Registro: " << GetLastError() << std::endl;
 				}
-
 			}
             option = 0x00;
         }
