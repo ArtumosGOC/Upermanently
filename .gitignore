@@ -63,6 +63,7 @@ bld/
 *.ipch
 *.aps
 *.json
+*.backup.json
 *.ncb
 *.opendb
 *.opensdf
