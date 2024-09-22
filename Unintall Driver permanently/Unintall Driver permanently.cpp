@@ -304,18 +304,26 @@ int main() {
             }
 
             // Validação da escolha do usuário
-            if (choice > 0 && choice <= static_cast<int>(devices.size())) {
+            /*if (choice > 0 && choice <= static_cast<int>(devices.size())) {
                 const std::wstring& selectedDeviceId = devices[choice - 1].deviceId;
                 AddStartupUninstall(selectedDeviceId); // Adiciona ao registro
                 UninstallDevice(selectedDeviceId); // Desinstala o dispositivo
                 
-            }
+            }*/
             
             std::wcout << L"\nDeseja desinstalar outro drive? (s/n): ";
             char choiceFlag;
             std::cin >> choiceFlag;
             if (choiceFlag == 'n' || choiceFlag == 'N')
                 break;
+            else if (choiceFlag == 's' || choiceFlag == 'S')
+            {
+				system("cls");
+                for (size_t i = 0; i < devices.size(); ++i) {
+                    std::wcout << i + 1 << L": " << devices[i].deviceName << devices[i].status << L"\n(ID:" << devices[i].deviceId << L")\n" << std::endl;
+                }
+				
+            }
         }
     }
 
