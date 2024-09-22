@@ -118,31 +118,13 @@ std::vector<DeviceInfo> ListDevices() {
     {
         // Solicitar palavra-chave do usuário para filtrar dispositivos
         std::wstring keyword;
-		std::wstring isFriendlyName;
-
-		std::wcout << L"Nome do dispositivo ou nome do Servico do dispositivo:( D - Dispositivo, S - Servico)\n";
-        while (true) {
-            if (_kbhit()) { // Verifica se uma tecla foi pressionada
-                char ch = _getch(); // Captura a tecla pressionada
-
-                if (ch == 's' || ch == 'S') {
-					isFriendlyName = L"S";
-                    break; // Sai do loop
-                }
-                else if (ch == 'd' || ch == 'D') {
-					isFriendlyName = L"D";
-                    break; // Sai do loop
-                }
-            }
-        }
 
 		system("cls"); // Limpa a tela
 
         std::wcout << L"Digite a palavra-chave para filtrar dispositivos (deixe vazio para listar ): ";
         std::getline(std::wcin, keyword);
         keyword.erase(std::remove(keyword.begin(), keyword.end(), L' '), keyword.end()); // Remover espaços em branco
-        if (isFriendlyName == L"S")
-		    keyword = TextUpper(keyword);
+		keyword = TextUpper(keyword);
 
         while (std::getline(jsonStream, line)) {
             if (line.find(L"InstanceId") != std::wstring::npos) {
@@ -156,6 +138,7 @@ std::vector<DeviceInfo> ListDevices() {
                 std::wstring friendlyName = line.substr(line.find(L":") + 1);
                 friendlyName.erase(remove(friendlyName.begin(), friendlyName.end(), L'"'), friendlyName.end());
                 friendlyName.erase(remove(friendlyName.begin(), friendlyName.end(), L','), friendlyName.end());
+				friendlyName = TextUpper(friendlyName);
 
                 //Extrair o Status
                 std::getline(jsonStream, line);
@@ -165,7 +148,7 @@ std::vector<DeviceInfo> ListDevices() {
 
                 // Filtrar dispositivos BTHENUM e aplicar a palavra-chave
                 if (status.find(L"OK") != std::wstring::npos && (keyword.empty() || instanceId.find(keyword) != std::wstring::npos || friendlyName.find(keyword) != std::wstring::npos)) {
-                    devices.push_back({ instanceId, friendlyName, status }); // Adiciona o dispositivo à lista
+                    devices.push_back({ instanceId,  friendlyName, status }); // Adiciona o dispositivo à lista
                 }
             }
         }
@@ -184,6 +167,7 @@ std::vector<DeviceInfo> ListDevices() {
 				std::wstring friendlyName = line.substr(line.find(L":") + 1);
 				friendlyName.erase(remove(friendlyName.begin(), friendlyName.end(), L'"'), friendlyName.end());
 				friendlyName.erase(remove(friendlyName.begin(), friendlyName.end(), L','), friendlyName.end());
+                friendlyName = TextUpper(friendlyName);
 
 				//Extrair o Status
 				std::getline(jsonStream, line);
@@ -304,12 +288,12 @@ int main() {
             }
 
             // Validação da escolha do usuário
-            /*if (choice > 0 && choice <= static_cast<int>(devices.size())) {
+            if (choice > 0 && choice <= static_cast<int>(devices.size())) {
                 const std::wstring& selectedDeviceId = devices[choice - 1].deviceId;
                 AddStartupUninstall(selectedDeviceId); // Adiciona ao registro
                 UninstallDevice(selectedDeviceId); // Desinstala o dispositivo
                 
-            }*/
+            }
             
             std::wcout << L"\nDeseja desinstalar outro drive? (s/n): ";
             char choiceFlag;
