@@ -5,9 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E6D8B9BB-5997-431C-B768-E252F8923EEE}|Unintall Driver permanently\\Unintall Driver permanently.vcxproj|C:\\Users\\artum\\OneDrive\\Documentos\\GitHub\\Upermanently\\Unintall Driver permanently\\Unintall Driver permanently.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{E6D8B9BB-5997-431C-B768-E252F8923EEE}|Unintall Driver permanently\\Unintall Driver permanently.vcxproj|solutionrelative:Unintall Driver permanently\\Unintall Driver permanently.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\MSBuild\\Microsoft\\VC\\v170\\Microsoft.CppBuild.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -17,24 +14,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Microsoft.CppBuild.targets",
-              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\MSBuild\\Microsoft\\VC\\v170\\Microsoft.CppBuild.targets",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\MSBuild\\Microsoft\\VC\\v170\\Microsoft.CppBuild.targets",
-              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\MSBuild\\Microsoft\\VC\\v170\\Microsoft.CppBuild.targets",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\MSBuild\\Microsoft\\VC\\v170\\Microsoft.CppBuild.targets",
-              "ViewState": "AgIAAP8BAAAAAAAAAAAgwBICAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2024-09-21T23:00:46.465Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -44,7 +28,7 @@
               "RelativeDocumentMoniker": "Unintall Driver permanently\\Unintall Driver permanently.cpp",
               "ToolTip": "C:\\Users\\artum\\OneDrive\\Documentos\\GitHub\\Upermanently\\Unintall Driver permanently\\Unintall Driver permanently.cpp",
               "RelativeToolTip": "Unintall Driver permanently\\Unintall Driver permanently.cpp",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAAAHMAAABmAAAAAAAAAA==",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAAAJIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-09-21T18:30:28.82Z",
               "EditorCaption": ""
