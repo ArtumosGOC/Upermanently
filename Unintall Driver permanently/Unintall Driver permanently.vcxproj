@@ -131,6 +131,12 @@
   <ItemGroup>
     <ClCompile Include="Unintall Driver permanently.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Base64.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AUTO.BASE64" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
