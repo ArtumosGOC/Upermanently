@@ -28,7 +28,7 @@ Para desinstalar um driver, siga os passos abaixo:
 1. Compile o projeto no Visual Studio 2022.
 2. Execute o executável gerado:
     ```sh
-    x64/Debug/Unintall\ Driver\ permanently.exe
+    x64/Debug/permanently.exe
     ```
     `USE O ADMINISTRADOR`
 3. Siga as instruções no terminal para listar e selecionar o dispositivo a ser desinstalado.
@@ -43,7 +43,7 @@ A função `UninstallDevice` desinstala um dispositivo dado seu ID.
 
 A função `AddStartupUninstall` adiciona um comando de desinstalação ao Registro para execução na inicialização.
 
-### Listar Dispositivos BTHENUM
+### Listar Dispositivos
 
 A função `ListDevices` lista os dispositivos presentes no sistema.
 
