@@ -1,0 +1,52 @@
+#include <windows.h>
+#include <iostream>
+#include <string>
+
+std::wstring GetExecutableDirectory() {
+    wchar_t buffer[MAX_PATH];
+    GetModuleFileName(NULL, buffer, MAX_PATH);
+
+    // Converta o caminho para um std::wstring
+    std::wstring exePath(buffer);
+
+    // Encontre o último separador de diretório (barra invertida) para isolar o diretório
+    size_t pos = exePath.find_last_of(L"\\/");
+    return (pos != std::wstring::npos) ? exePath.substr(0, pos) : L"";
+}
+
+void ExecuteBatchFilesInDirectory(const std::wstring& directoryPath) {
+    WIN32_FIND_DATA findFileData;
+    HANDLE hFind = FindFirstFile((directoryPath + L"\\*.bat").c_str(), &findFileData);
+
+    if (hFind == INVALID_HANDLE_VALUE) {
+        std::wcerr << L"Erro ao acessar o diretório: " << directoryPath << std::endl;
+        return;
+    }
+
+    do {
+        std::wstring batFilePath = directoryPath + L"\\" + findFileData.cFileName;
+        std::wcout << L"Executando: " << batFilePath << L"\n" << std::endl;
+
+        // Colocar o caminho do arquivo .bat entre aspas
+        std::wstring command = L"\"" + batFilePath + L"\"";
+
+        // Execute o arquivo .bat
+        _wsystem(command.c_str());
+
+    } while (FindNextFile(hFind, &findFileData) != 0);
+
+    FindClose(hFind);
+}
+
+int main() {
+    // Defina o caminho do diretório onde os arquivos .bat estão localizados (diretório do executável)
+    std::wstring directoryPath = GetExecutableDirectory();
+
+    ExecuteBatchFilesInDirectory(directoryPath);
+    system("pause");
+
+    return 0;
+}
+
+// Compile and link with: g++ -o AUTO run_bat_files.cpp
+// convert exe source code to base64
